@@ -1,5 +1,12 @@
 <?php
-namespace KapitchiCalendar\Plugin;
+/**
+ * Kapitchi Zend Framework 2 Modules (http://kapitchi.com/)
+ *
+ * @copyright Copyright (c) 2012-2013 Kapitchi Open Source Team (http://kapitchi.com/open-source-team)
+ * @license   http://opensource.org/licenses/LGPL-3.0 LGPL 3.0
+ */
+
+namespace KapCalendar\Plugin;
 
 use Zend\EventManager\EventInterface,
     KapitchiApp\PluginManager\PluginInterface;
@@ -23,7 +30,7 @@ class EntryRevision implements PluginInterface
 
     public function getName()
     {
-        return '[KapitchiCalendar] Revision enabler for Entry';
+        return '[KapCalendar] Revision enabler for Entry';
     }
 
     public function getVersion()
@@ -36,8 +43,8 @@ class EntryRevision implements PluginInterface
         $em = $e->getApplication()->getEventManager();
         $sm = $e->getApplication()->getServiceManager();
         
-        $em->getSharedManager()->attach('KapitchiCalendar\Service\Entry', 'persist', function($e) use ($sm) {
-            $revService = $sm->get('KapitchiCalendar\Service\EntryRevision');
+        $em->getSharedManager()->attach('KapCalendar\Service\Entry', 'persist', function($e) use ($sm) {
+            $revService = $sm->get('KapCalendar\Service\EntryRevision');
             $revision = $revService->createEntityRevision($e->getParam('entity'));
             
             $data = $e->getParam('data', false);

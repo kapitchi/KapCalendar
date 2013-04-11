@@ -1,5 +1,12 @@
 <?php
-namespace KapitchiCalendar\Service;
+/**
+ * Kapitchi Zend Framework 2 Modules (http://kapitchi.com/)
+ *
+ * @copyright Copyright (c) 2012-2013 Kapitchi Open Source Team (http://kapitchi.com/open-source-team)
+ * @license   http://opensource.org/licenses/LGPL-3.0 LGPL 3.0
+ */
+
+namespace KapCalendar\Service;
 
 /**
  *
@@ -11,10 +18,10 @@ class Reminder extends \KapitchiEntity\Service\EntityService
     
     /**
      * 
-     * @param \KapitchiCalendar\Entity\Entry $entry
-     * @param \KapitchiCalendar\Entity\Reminder $reminder
+     * @param \KapCalendar\Entity\Entry $entry
+     * @param \KapCalendar\Entity\Reminder $reminder
      */
-    public function persistForEntry(\KapitchiCalendar\Entity\Entry $entry, \KapitchiCalendar\Entity\Reminder $reminder)
+    public function persistForEntry(\KapCalendar\Entity\Entry $entry, \KapCalendar\Entity\Reminder $reminder)
     {
         $triggerTime = $this->createTriggerTime($entry->getFromTime(), $reminder->getTimeSpan());
         
@@ -24,7 +31,7 @@ class Reminder extends \KapitchiEntity\Service\EntityService
         $this->persist($reminder);
     }
     
-    public function syncReminders(\KapitchiCalendar\Entity\Entry $entry)
+    public function syncReminders(\KapCalendar\Entity\Entry $entry)
     {
         $reminders = $this->getPaginator(array(
             'entryId' => $entry->getId()
@@ -37,7 +44,7 @@ class Reminder extends \KapitchiEntity\Service\EntityService
         }
     }
     
-    public function setEnabledAllEntryReminders(\KapitchiCalendar\Entity\Entry $entry, $enable = true)
+    public function setEnabledAllEntryReminders(\KapCalendar\Entity\Entry $entry, $enable = true)
     {
         $entities = $this->getPaginator(array(
             'entryId' => $entry->getId()
@@ -76,7 +83,7 @@ class Reminder extends \KapitchiEntity\Service\EntityService
         }
     }
     
-    public function triggerReminder(\KapitchiCalendar\Entity\Reminder $reminder)
+    public function triggerReminder(\KapCalendar\Entity\Reminder $reminder)
     {
         
         $this->triggerEvent('triggerReminder', array(

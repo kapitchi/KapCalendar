@@ -1,5 +1,12 @@
 <?php
-namespace KapitchiCalendar\Service;
+/**
+ * Kapitchi Zend Framework 2 Modules (http://kapitchi.com/)
+ *
+ * @copyright Copyright (c) 2012-2013 Kapitchi Open Source Team (http://kapitchi.com/open-source-team)
+ * @license   http://opensource.org/licenses/LGPL-3.0 LGPL 3.0
+ */
+
+namespace KapCalendar\Service;
 
 /**
  *
@@ -11,7 +18,7 @@ class Entry extends \KapitchiEntity\Service\EntityService
     
     public function loadModel($entity, $options = array(), EntityModelInterface $model = null)
     {
-        $model = new \KapitchiCalendar\Model\Entry($entity);
+        $model = new \KapCalendar\Model\Entry($entity);
         $type = $this->getTypeManager()->get($entity->getTypeHandle());
         //$typeEntity = $ser->findOneBy(array(
             //'entryId' => $entity->getId()

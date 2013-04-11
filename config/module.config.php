@@ -4,7 +4,7 @@ return array(
         'entry_types' => array(
             'factories' => array(
                 'birthday' => function($sm) {
-                    $ins = $sm->getServiceLocator()->get('KapitchiCalendar\Service\Birthday');
+                    $ins = $sm->getServiceLocator()->get('KapCalendar\Service\Birthday');
                     return $ins;
                 }
             )
@@ -12,8 +12,8 @@ return array(
     ),
     'plugin_manager' => array(
         'invokables' => array(
-            'Calendar/UiReminder' => 'KapitchiCalendar\Plugin\UiReminder',
-            'Calendar/EntryRevision' => 'KapitchiCalendar\Plugin\EntryRevision',
+            'Calendar/UiReminder' => 'KapCalendar\Plugin\UiReminder',
+            'Calendar/EntryRevision' => 'KapCalendar\Plugin\EntryRevision',
         ),
     ),
     'controller_plugins' => array(
@@ -40,7 +40,7 @@ return array(
                 'options' => array(
                     'route'    => '/calendar',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'KapitchiCalendar\Controller',
+                        '__NAMESPACE__' => 'KapCalendar\Controller',
                     ),
                 ),
                 'may_terminate' => false,
@@ -74,7 +74,7 @@ return array(
                         'options' => array(
                             'route'    => '/api',
                             'defaults' => array(
-                                '__NAMESPACE__' => 'KapitchiCalendar\Controller\Api',
+                                '__NAMESPACE__' => 'KapCalendar\Controller\Api',
                             ),
                         ),
                         'may_terminate' => false,

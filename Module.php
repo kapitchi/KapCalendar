@@ -1,6 +1,12 @@
 <?php
+/**
+ * Kapitchi Zend Framework 2 Modules (http://kapitchi.com/)
+ *
+ * @copyright Copyright (c) 2012-2013 Kapitchi Open Source Team (http://kapitchi.com/open-source-team)
+ * @license   http://opensource.org/licenses/LGPL-3.0 LGPL 3.0
+ */
 
-namespace KapitchiCalendar;
+namespace KapCalendar;
 
 use Zend\EventManager\EventInterface,
     Zend\ModuleManager\Feature\ControllerProviderInterface,
@@ -24,14 +30,14 @@ class Module extends AbstractModule
     {
         return array(
             'factories' => array(
-                'KapitchiCalendar\Controller\Entry' => function($sm) {
+                'KapCalendar\Controller\Entry' => function($sm) {
                     $ins = new Controller\EntryController();
-                    $ins->setEntityService($sm->getServiceLocator()->get('KapitchiCalendar\Service\Entry'));
+                    $ins->setEntityService($sm->getServiceLocator()->get('KapiCalendar\Service\Entry'));
                     return $ins;
                 },
                 //API
-                'KapitchiCalendar\Controller\Api\Entry' => function($sm) {
-                    $ins = new Controller\Api\EntryRestfulController($sm->getServiceLocator()->get('KapitchiCalendar\Service\Entry'));
+                'KapCalendar\Controller\Api\Entry' => function($sm) {
+                    $ins = new Controller\Api\EntryRestfulController($sm->getServiceLocator()->get('KapCalendar\Service\Entry'));
                     return $ins;
                 },
             )
@@ -44,13 +50,13 @@ class Module extends AbstractModule
             'factories' => array(
                 'calendarReminder' => function($sm) {
                     $ins = new View\Helper\Reminder(
-                        $sm->getServiceLocator()->get('KapitchiCalendar\Service\Reminder')
+                        $sm->getServiceLocator()->get('KapCalendar\Service\Reminder')
                     );
                     return $ins;
                 },
                 'calendarEntry' => function($sm) {
                     $ins = new View\Helper\Entry(
-                        $sm->getServiceLocator()->get('KapitchiCalendar\Service\Entry')
+                        $sm->getServiceLocator()->get('KapCalendar\Service\Entry')
                     );
                     return $ins;
                 },
@@ -62,76 +68,76 @@ class Module extends AbstractModule
     {
         return array(
             'invokables' => array(
-                'KapitchiCalendar\Entity\Calendar' => 'KapitchiCalendar\Entity\Calendar',
-                'KapitchiCalendar\Entity\Entry' => 'KapitchiCalendar\Entity\Entry',
-                'KapitchiCalendar\Entity\Birthday' => 'KapitchiCalendar\Entity\Birthday',
-                'KapitchiCalendar\Entity\Reminder' => 'KapitchiCalendar\Entity\Reminder',
+                'KapCalendar\Entity\Calendar' => 'KapCalendar\Entity\Calendar',
+                'KapCalendar\Entity\Entry' => 'KapCalendar\Entity\Entry',
+                'KapCalendar\Entity\Birthday' => 'KapCalendar\Entity\Birthday',
+                'KapCalendar\Entity\Reminder' => 'KapCalendar\Entity\Reminder',
             ),
             'factories' => array(
-                'KapitchiCalendar\EntryType\EntryTypeManager' => 'KapitchiCalendar\EntryType\EntryTypeManagerFactory',
+                'KapCalendar\EntryType\EntryTypeManager' => 'KapCalendar\EntryType\EntryTypeManagerFactory',
                 //Calendar
-                'KapitchiCalendar\Service\Calendar' => function($sm) {
+                'KapCalendar\Service\Calendar' => function($sm) {
                     $ins = new Service\Calendar(
-                        $sm->get('KapitchiCalendar\Mapper\CalendarDbAdapter'),
-                        $sm->get('KapitchiCalendar\Entity\Calendar'),
-                        $sm->get('KapitchiCalendar\Entity\CalendarHydrator')
+                        $sm->get('KapCalendar\Mapper\CalendarDbAdapter'),
+                        $sm->get('KapCalendar\Entity\Calendar'),
+                        $sm->get('KapCalendar\Entity\CalendarHydrator')
                     );
-                    //$s->setInputFilter($sm->get('KapitchiAuction\Entity\AuctionInputFilter'));
+                    //$s->setInputFilter($sm->get('KapAuction\Entity\AuctionInputFilter'));
                     return $ins;
                 },
-                'KapitchiCalendar\Mapper\CalendarDbAdapter' => function ($sm) {
+                'KapCalendar\Mapper\CalendarDbAdapter' => function ($sm) {
                     return new EntityDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
                         new EntityDbAdapterMapperOptions(array(
                             'tableName' => 'auction_revision',
                             'primaryKey' => 'id',
-                            'hydrator' => $sm->get('KapitchiCalendar\Entity\CalendarHydrator'),
-                            'entityPrototype' => $sm->get('KapitchiCalendar\Entity\Calendar'),
+                            'hydrator' => $sm->get('KapCalendar\Entity\CalendarHydrator'),
+                            'entityPrototype' => $sm->get('KapCalendar\Entity\Calendar'),
                         )),
-                        $sm->get('KapitchiCalendar\Entity\Calendar'),
-                        $sm->get('KapitchiCalendar\Entity\CalendarHydrator')
+                        $sm->get('KapCalendar\Entity\Calendar'),
+                        $sm->get('KapCalendar\Entity\CalendarHydrator')
                     );
                 },
-                'KapitchiCalendar\Entity\CalendarHydrator' => function ($sm) {
+                'KapCalendar\Entity\CalendarHydrator' => function ($sm) {
                     return new \Zend\Stdlib\Hydrator\ClassMethods(false);
                 },
                 
                 //Entry
-                'KapitchiCalendar\Service\Entry' => function($sm) {
+                'KapCalendar\Service\Entry' => function($sm) {
                     $ins = new Service\Entry(
-                        $sm->get('KapitchiCalendar\Mapper\EntryDbAdapter'),
-                        $sm->get('KapitchiCalendar\Entity\Entry'),
-                        $sm->get('KapitchiCalendar\Entity\EntryHydrator')
+                        $sm->get('KapCalendar\Mapper\EntryDbAdapter'),
+                        $sm->get('KapCalendar\Entity\Entry'),
+                        $sm->get('KapCalendar\Entity\EntryHydrator')
                     );
-                    $ins->setTypeManager($sm->get('KapitchiCalendar\EntryType\EntryTypeManager'));
-                    //$s->setInputFilter($sm->get('KapitchiAuction\Entity\AuctionInputFilter'));
+                    $ins->setTypeManager($sm->get('KapCalendar\EntryType\EntryTypeManager'));
+                    //$s->setInputFilter($sm->get('KapAuction\Entity\AuctionInputFilter'));
                     return $ins;
                 },
-                'KapitchiCalendar\Mapper\EntryDbAdapter' => function ($sm) {
+                'KapCalendar\Mapper\EntryDbAdapter' => function ($sm) {
                     return new EntityDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
                         new EntityDbAdapterMapperOptions(array(
                             'tableName' => 'calendar_entry',
                             'primaryKey' => 'id',
-                            'hydrator' => $sm->get('KapitchiCalendar\Entity\EntryHydrator'),
-                            'entityPrototype' => $sm->get('KapitchiCalendar\Entity\Entry'),
+                            'hydrator' => $sm->get('KapCalendar\Entity\EntryHydrator'),
+                            'entityPrototype' => $sm->get('KapCalendar\Entity\Entry'),
                         )),
-                        $sm->get('KapitchiCalendar\Entity\Entry'),
-                        $sm->get('KapitchiCalendar\Entity\EntryHydrator')
+                        $sm->get('KapCalendar\Entity\Entry'),
+                        $sm->get('KapCalendar\Entity\EntryHydrator')
                     );
                 },
-                'KapitchiCalendar\Entity\EntryHydrator' => function ($sm) {
+                'KapCalendar\Entity\EntryHydrator' => function ($sm) {
                     return new Entity\EntryHydrator(false);
                 },
                 //EntryRevision
-                'KapitchiCalendar\Service\EntryRevision' => function ($sm) {
+                'KapCalendar\Service\EntryRevision' => function ($sm) {
                     $s = new Service\EntryRevision(
-                        $sm->get('KapitchiCalendar\Mapper\EntryRevisionDbAdapter'),
-                        $sm->get('KapitchiCalendar\Service\Entry')
+                        $sm->get('KapCalendar\Mapper\EntryRevisionDbAdapter'),
+                        $sm->get('KapCalendar\Service\Entry')
                     );
                     return $s;
                 },
-                'KapitchiCalendar\Mapper\EntryRevisionDbAdapter' => function ($sm) {
+                'KapCalendar\Mapper\EntryRevisionDbAdapter' => function ($sm) {
                     return new \KapitchiEntity\Mapper\RevisionDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
                         new EntityDbAdapterMapperOptions(array(
@@ -140,62 +146,62 @@ class Module extends AbstractModule
                             'hydrator' => $sm->get('KapitchiEntity\Entity\RevisionHydrator'),
                             'entityPrototype' => $sm->get('KapitchiEntity\Entity\Revision'),
                         )),
-                        $sm->get('KapitchiCalendar\Entity\Entry'),
-                        $sm->get('KapitchiCalendar\Entity\EntryHydrator')
+                        $sm->get('KapCalendar\Entity\Entry'),
+                        $sm->get('KapCalendar\Entity\EntryHydrator')
                     );
                 },
                 
                 //Birthday
-                'KapitchiCalendar\Service\Birthday' => function($sm) {
+                'KapCalendar\Service\Birthday' => function($sm) {
                     $ins = new Service\Birthday(
-                        $sm->get('KapitchiCalendar\Mapper\BirthdayDbAdapter'),
-                        $sm->get('KapitchiCalendar\Entity\Birthday'),
-                        $sm->get('KapitchiCalendar\Entity\BirthdayHydrator')
+                        $sm->get('KapCalendar\Mapper\BirthdayDbAdapter'),
+                        $sm->get('KapCalendar\Entity\Birthday'),
+                        $sm->get('KapCalendar\Entity\BirthdayHydrator')
                     );
-                    //$s->setInputFilter($sm->get('KapitchiAuction\Entity\AuctionInputFilter'));
+                    //$s->setInputFilter($sm->get('KapAuction\Entity\AuctionInputFilter'));
                     return $ins;
                 },
-                'KapitchiCalendar\Mapper\BirthdayDbAdapter' => function ($sm) {
+                'KapCalendar\Mapper\BirthdayDbAdapter' => function ($sm) {
                     return new EntityDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
                         new EntityDbAdapterMapperOptions(array(
                             'tableName' => 'calendar_entry_birthday',
                             'primaryKey' => 'id',
-                            'hydrator' => $sm->get('KapitchiCalendar\Entity\BirthdayHydrator'),
-                            'entityPrototype' => $sm->get('KapitchiCalendar\Entity\Birthday'),
+                            'hydrator' => $sm->get('KapCalendar\Entity\BirthdayHydrator'),
+                            'entityPrototype' => $sm->get('KapCalendar\Entity\Birthday'),
                         )),
-                        $sm->get('KapitchiCalendar\Entity\Birthday'),
-                        $sm->get('KapitchiCalendar\Entity\BirthdayHydrator')
+                        $sm->get('KapCalendar\Entity\Birthday'),
+                        $sm->get('KapCalendar\Entity\BirthdayHydrator')
                     );
                 },
-                'KapitchiCalendar\Entity\BirthdayHydrator' => function ($sm) {
+                'KapCalendar\Entity\BirthdayHydrator' => function ($sm) {
                     return new \Zend\Stdlib\Hydrator\ClassMethods(false);
                 },
                 //Reminder
-                'KapitchiCalendar\Service\Reminder' => function($sm) {
+                'KapCalendar\Service\Reminder' => function($sm) {
                     $ins = new Service\Reminder(
-                        $sm->get('KapitchiCalendar\Mapper\ReminderDbAdapter'),
-                        $sm->get('KapitchiCalendar\Entity\Reminder'),
-                        $sm->get('KapitchiCalendar\Entity\ReminderHydrator')
+                        $sm->get('KapCalendar\Mapper\ReminderDbAdapter'),
+                        $sm->get('KapCalendar\Entity\Reminder'),
+                        $sm->get('KapCalendar\Entity\ReminderHydrator')
                     );
-                    $ins->setEntryService($sm->get('KapitchiCalendar\Service\Entry'));
-                    //$s->setInputFilter($sm->get('KapitchiAuction\Entity\AuctionInputFilter'));
+                    $ins->setEntryService($sm->get('KapCalendar\Service\Entry'));
+                    //$s->setInputFilter($sm->get('KapAuction\Entity\AuctionInputFilter'));
                     return $ins;
                 },
-                'KapitchiCalendar\Mapper\ReminderDbAdapter' => function ($sm) {
+                'KapCalendar\Mapper\ReminderDbAdapter' => function ($sm) {
                     return new EntityDbAdapterMapper(
                         $sm->get('Zend\Db\Adapter\Adapter'),
                         new EntityDbAdapterMapperOptions(array(
                             'tableName' => 'calendar_reminder',
                             'primaryKey' => 'id',
-                            'hydrator' => $sm->get('KapitchiCalendar\Entity\ReminderHydrator'),
-                            'entityPrototype' => $sm->get('KapitchiCalendar\Entity\Reminder'),
+                            'hydrator' => $sm->get('KapCalendar\Entity\ReminderHydrator'),
+                            'entityPrototype' => $sm->get('KapCalendar\Entity\Reminder'),
                         )),
-                        $sm->get('KapitchiCalendar\Entity\Reminder'),
-                        $sm->get('KapitchiCalendar\Entity\ReminderHydrator')
+                        $sm->get('KapCalendar\Entity\Reminder'),
+                        $sm->get('KapCalendar\Entity\ReminderHydrator')
                     );
                 },
-                'KapitchiCalendar\Entity\ReminderHydrator' => function ($sm) {
+                'KapCalendar\Entity\ReminderHydrator' => function ($sm) {
                     return new Entity\ReminderHydrator(false);
                 },
                 

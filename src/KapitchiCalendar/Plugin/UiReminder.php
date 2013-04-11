@@ -1,5 +1,12 @@
 <?php
-namespace KapitchiCalendar\Plugin;
+/**
+ * Kapitchi Zend Framework 2 Modules (http://kapitchi.com/)
+ *
+ * @copyright Copyright (c) 2012-2013 Kapitchi Open Source Team (http://kapitchi.com/open-source-team)
+ * @license   http://opensource.org/licenses/LGPL-3.0 LGPL 3.0
+ */
+
+namespace KapCalendar\Plugin;
 
 use Zend\EventManager\EventInterface;
 
@@ -21,7 +28,7 @@ class UiReminder implements \KapitchiApp\PluginManager\PluginInterface
 
     public function getName()
     {
-        return '[KapitchiCalendar] UI calendar reminder';
+        return '[KapCalendar] UI calendar reminder';
     }
 
     public function getVersion()
@@ -34,7 +41,7 @@ class UiReminder implements \KapitchiApp\PluginManager\PluginInterface
         $em = $e->getApplication()->getEventManager();
         $sm = $e->getApplication()->getServiceManager();
         
-        $em->getSharedManager()->attach('KapitchiCalendar\Service\Reminder', 'triggerReminder', function ($e) {
+        $em->getSharedManager()->attach('KapCalendar\Service\Reminder', 'triggerReminder', function ($e) {
                     
         });
     }
