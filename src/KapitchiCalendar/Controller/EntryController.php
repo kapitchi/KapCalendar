@@ -8,22 +8,8 @@
 
 namespace KapCalendar\Controller;
 
-use KapitchiEntity\Controller\AbstractEntityController;
+use KapitchiEntity\Controller\EntityContoller;
 
-class EntryController extends AbstractEntityController
+class EntryController extends EntityContoller
 {
-    
-    public function getIndexUrl()
-    {
-        return $this->url()->fromRoute('calendar/entry', array(
-            'action' => 'index'
-        ));
-    }
-
-    public function getUpdateUrl($entity)
-    {
-        return $this->url()->fromRoute('calendar/entry', array(
-            'action' => 'update', 'id' => $entity->getId()
-        ));
-    }
 }
