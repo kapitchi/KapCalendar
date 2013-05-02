@@ -1,6 +1,6 @@
 <?php
 return array(
-    'kapitchi-calendar' => array(
+    'kap-calendar' => array(
         'entry_types' => array(
             'factories' => array(
                 'birthday' => function($sm) {
