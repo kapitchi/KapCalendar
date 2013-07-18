@@ -12,8 +12,9 @@ return array(
     ),
     'plugin_manager' => array(
         'invokables' => array(
-            'Calendar/UiReminder' => 'KapCalendar\Plugin\UiReminder',
-            'Calendar/EntryRevision' => 'KapCalendar\Plugin\EntryRevision',
+            //TODO disabled until fully implemented
+            //'Calendar/UiReminder' => 'KapCalendar\Plugin\UiReminder',
+            //'Calendar/EntryRevision' => 'KapCalendar\Plugin\EntryRevision',
         ),
     ),
     'controller_plugins' => array(
